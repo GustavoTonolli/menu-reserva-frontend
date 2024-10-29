@@ -33,12 +33,13 @@
 import { key } from '../store';
 import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
+import { GET_MENU_ITENS } from '../store/actions-type';
 
 export default defineComponent({
     name: 'Menu',
     setup() {
         const store = useStore(key);
-
+        store.dispatch(GET_MENU_ITENS);
         // Computed property to get the menu items from the store
         const menuItems = computed(() => store.state.menuItens);
         // Reactive property to hold the selected category

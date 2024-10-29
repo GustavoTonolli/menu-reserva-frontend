@@ -1,6 +1,9 @@
 import IMenu from 'src/interfaces/IMenu'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
+import { GET_MENU_ITENS } from './actions-type'
+import http from '../http'
+import { DEFINE_MENU_ITEMS } from './mutations-type'
 
 interface State {
   menuItens: IMenu[]
@@ -10,25 +13,18 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore<State>({
   state: {
-    menuItens: [
-      {
-        id: '1',
-        name: 'Pizza',
-        price: 'R$ 30',
-        category: 'principal',
-        image:
-          'https://images.pexels.com/photos/19239118/pexels-photo-19239118/free-photo-of-comida-alimento-refeicao-italiano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        description: 'Uma pizza deliciosa com ingredientes deliciosos.',
-      },
-      {
-        id: '2',
-        name: 'Salada',
-        price: 'R$ 25',
-        category: 'entrada',
-        image:
-          'https://images.pexels.com/photos/8992844/pexels-photo-8992844.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        description: 'salada de verdura com um toque delicioso.',
-      },
-    ],
+    menuItens: [],
+  },
+  mutations: {
+    [DEFINE_MENU_ITEMS](state, menuItens: IMenu[]) {
+      state.menuItens = menuItens
+    },
+  },
+  actions: {
+    [GET_MENU_ITENS]({ commit }) {
+      http
+        .get('menu')
+        .then((response) => commit(DEFINE_MENU_ITEMS, response.data))
+    },
   },
 })
