@@ -6,13 +6,23 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+# environment variables
 .env
-env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 node_modules
 dist
 dist-ssr
 *.local
+
+# Ignore JavaScript build files
+*.js
+*.js.map
+
 
 # Editor directories and files
 .vscode/*
